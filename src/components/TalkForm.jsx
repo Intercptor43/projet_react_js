@@ -17,6 +17,14 @@ const TalkForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    submitForm()
+  }
+
+  const submitForm = () => {
+    if (!formData.title || !formData.subject || !formData.duration || !formData.presenter || !formData.objective) {
+      return
+    }
+    
     const newTalk = {
       id: Date.now(),
       ...formData,
@@ -33,6 +41,13 @@ const TalkForm = () => {
       objective: '',
       date: new Date().toISOString().split('T')[0],
     })
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      submitForm()
+    }
   }
 
   const handleChange = (e) => {
@@ -56,9 +71,10 @@ const TalkForm = () => {
           name="date"
           value={formData.date}
           onChange={handleChange}
+          onKeyDown={handleKeyDown}
           className={`w-full px-3 py-2 border rounded-md transition-colors duration-200 ${darkMode
-              ? 'bg-gray-700 border-gray-600 text-gray-100 focus:border-blue-500 focus:ring-blue-500'
-              : 'bg-white border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
+            ? 'bg-gray-700 border-gray-600 text-gray-100 focus:border-blue-500 focus:ring-blue-500'
+            : 'bg-white border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
             }`}
           required
         />
@@ -73,9 +89,10 @@ const TalkForm = () => {
           name="title"
           value={formData.title}
           onChange={handleChange}
+          onKeyDown={handleKeyDown}
           className={`w-full px-3 py-2 border rounded-md transition-colors duration-200 ${darkMode
-              ? 'bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500'
-              : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500'
+            ? 'bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500'
+            : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500'
             }`}
           placeholder="Titre du talk"
           required
@@ -91,9 +108,10 @@ const TalkForm = () => {
           name="subject"
           value={formData.subject}
           onChange={handleChange}
+          onKeyDown={handleKeyDown}
           className={`w-full px-3 py-2 border rounded-md transition-colors duration-200 ${darkMode
-              ? 'bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500'
-              : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500'
+            ? 'bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500'
+            : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500'
             }`}
           placeholder="Sujet du talk"
           required
@@ -109,9 +127,10 @@ const TalkForm = () => {
           name="duration"
           value={formData.duration}
           onChange={handleChange}
+          onKeyDown={handleKeyDown}
           className={`w-full px-3 py-2 border rounded-md transition-colors duration-200 ${darkMode
-              ? 'bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500'
-              : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500'
+            ? 'bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500'
+            : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500'
             }`}
           placeholder="Durée en minutes"
           required
@@ -127,9 +146,10 @@ const TalkForm = () => {
           name="presenter"
           value={formData.presenter}
           onChange={handleChange}
+          onKeyDown={handleKeyDown}
           className={`w-full px-3 py-2 border rounded-md transition-colors duration-200 ${darkMode
-              ? 'bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500'
-              : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500'
+            ? 'bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500'
+            : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500'
             }`}
           placeholder="Nom du présentateur"
           required
@@ -144,9 +164,10 @@ const TalkForm = () => {
           name="objective"
           value={formData.objective}
           onChange={handleChange}
+          onKeyDown={handleKeyDown}
           className={`w-full px-3 py-2 border rounded-md transition-colors duration-200 ${darkMode
-              ? 'bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500'
-              : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500'
+            ? 'bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500'
+            : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500'
             }`}
           placeholder="Objectif du talk"
           rows="3"
@@ -157,8 +178,8 @@ const TalkForm = () => {
       <button
         type="submit"
         className={`w-full py-2 px-4 rounded-md font-medium transition-colors duration-200 ${darkMode
-            ? 'bg-blue-600 hover:bg-blue-700 text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800'
-            : 'bg-blue-500 hover:bg-blue-600 text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+          ? 'bg-blue-600 hover:bg-blue-700 text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800'
+          : 'bg-blue-500 hover:bg-blue-600 text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
           }`}
       >
         Ajouter le Talk
