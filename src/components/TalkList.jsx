@@ -22,7 +22,7 @@ const TalkList = () => {
   })
 
   const isPastTalk = (talk) => {
-    const talkDate = new Date(talk.createdAt)
+    const talkDate = new Date(talk.scheduledDate)
     const now = new Date()
     return talkDate < now
   }
@@ -198,7 +198,7 @@ const TalkList = () => {
                       {talk.title}
                     </h3>
                     <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                      Par {talk.presenter}
+                      Par {talk.presenter} - {new Date(talk.scheduledDate).toLocaleDateString()}
                     </p>
                   </div>
                   <div className="flex space-x-2">

@@ -9,6 +9,7 @@ const TalkForm = () => {
     duration: '',
     presenter: '',
     objective: '',
+    date: new Date().toISOString().split('T')[0],
   })
 
   const darkMode = useStore((state) => state.darkMode)
@@ -21,6 +22,7 @@ const TalkForm = () => {
       ...formData,
       duration: parseInt(formData.duration),
       createdAt: new Date().toISOString(),
+      scheduledDate: formData.date,
     }
     addTalk(newTalk)
     setFormData({
@@ -29,6 +31,7 @@ const TalkForm = () => {
       duration: '',
       presenter: '',
       objective: '',
+      date: new Date().toISOString().split('T')[0],
     })
   }
 
@@ -44,6 +47,24 @@ const TalkForm = () => {
     <form onSubmit={handleSubmit} className="space-y-4">
       <h2 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Ajouter un Talk</h2>
       
+      <div className="space-y-2">
+        <label className={`block text-sm font-medium ${darkMode ? 'text-gray-200' : 'text-gray-700'}`}>
+          Date du Talk
+        </label>
+        <input
+          type="date"
+          name="date"
+          value={formData.date}
+          onChange={handleChange}
+          className={`w-full px-3 py-2 border rounded-md transition-colors duration-200 ${
+            darkMode 
+              ? 'bg-gray-700 border-gray-600 text-gray-100 focus:border-blue-500 focus:ring-blue-500' 
+              : 'bg-white border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
+          }`}
+          required
+        />
+      </div>
+
       <div className="space-y-2">
         <label className={`block text-sm font-medium ${darkMode ? 'text-gray-200' : 'text-gray-700'}`}>
           Titre
