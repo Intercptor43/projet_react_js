@@ -27,7 +27,7 @@ function App() {
           </h1>
           <ThemeToggle />
         </div>
-        
+
         <div className="flex-1 flex">
           <div className={`w-1/2 ${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'}`}>
             <div className="p-6">
