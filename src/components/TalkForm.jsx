@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import useStore from '../store/useStore'
+import './TalkForm.css'
 
 const TalkForm = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const TalkForm = () => {
     objective: '',
   })
 
+  const darkMode = useStore((state) => state.darkMode)
   const addTalk = useStore((state) => state.addTalk)
 
   const handleSubmit = (e) => {
@@ -39,11 +41,11 @@ const TalkForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Ajouter un Talk</h2>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <h2 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-800'}`}>Ajouter un Talk</h2>
       
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
           Titre
         </label>
         <input
@@ -51,13 +53,14 @@ const TalkForm = () => {
           name="title"
           value={formData.title}
           onChange={handleChange}
+          className={`w-full px-3 py-2 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' : 'bg-white border-gray-300 text-gray-800'}`}
+          placeholder="Titre du talk"
           required
-          className="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
         />
       </div>
 
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
           Sujet
         </label>
         <input
@@ -65,13 +68,14 @@ const TalkForm = () => {
           name="subject"
           value={formData.subject}
           onChange={handleChange}
+          className={`w-full px-3 py-2 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' : 'bg-white border-gray-300 text-gray-800'}`}
+          placeholder="Sujet du talk"
           required
-          className="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
         />
       </div>
 
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
           Durée (minutes)
         </label>
         <input
@@ -79,43 +83,45 @@ const TalkForm = () => {
           name="duration"
           value={formData.duration}
           onChange={handleChange}
+          className={`w-full px-3 py-2 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' : 'bg-white border-gray-300 text-gray-800'}`}
+          placeholder="Durée en minutes"
           required
-          min="1"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
         />
       </div>
 
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          Présentateur/trice
+        <label className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+          Présentateur
         </label>
         <input
           type="text"
           name="presenter"
           value={formData.presenter}
           onChange={handleChange}
+          className={`w-full px-3 py-2 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' : 'bg-white border-gray-300 text-gray-800'}`}
+          placeholder="Nom du présentateur"
           required
-          className="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
         />
       </div>
 
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
           Objectif
         </label>
         <textarea
           name="objective"
           value={formData.objective}
           onChange={handleChange}
-          required
-          className="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+          className={`w-full px-3 py-2 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' : 'bg-white border-gray-300 text-gray-800'}`}
+          placeholder="Objectif du talk"
           rows="3"
+          required
         />
       </div>
 
       <button
         type="submit"
-        className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+        className={`w-full py-2 px-4 rounded-md font-medium ${darkMode ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-blue-500 hover:bg-blue-600 text-white'}`}
       >
         Ajouter le Talk
       </button>

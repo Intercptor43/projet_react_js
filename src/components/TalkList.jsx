@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import useStore from '../store/useStore'
-import { TrashIcon, PencilIcon } from '@heroicons/react/24/outline'
+import './TalkList.css'
+import { PencilLine, Trash2 } from 'lucide-react'
 
 const TalkList = () => {
   const [sortBy, setSortBy] = useState('date')
   const [editingTalk, setEditingTalk] = useState(null)
   const talks = useStore((state) => state.talks)
+  const darkMode = useStore((state) => state.darkMode)
   const removeTalk = useStore((state) => state.removeTalk)
   const updateTalk = useStore((state) => state.updateTalk)
 
@@ -46,11 +48,11 @@ const TalkList = () => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Liste des Talks</h2>
+        <h2 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-800'}`}>Liste des Talks</h2>
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
-          className="px-3 py-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+          className={`px-3 py-2 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-800'}`}
         >
           <option value="date">Trier par date</option>
           <option value="duration">Trier par durée</option>
@@ -58,20 +60,16 @@ const TalkList = () => {
         </select>
       </div>
 
-      <div className="grid gap-4">
+      <div className="space-y-4">
         {sortedTalks.map((talk) => (
           <div
             key={talk.id}
-            className={`p-4 rounded-lg shadow-md ${
-              isPastTalk(talk)
-                ? 'bg-gray-100 dark:bg-gray-700'
-                : 'bg-white dark:bg-gray-800'
-            }`}
+            className={`p-4 rounded-lg shadow-md ${darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-800'} ${isPastTalk(talk) ? 'opacity-50' : ''}`}
           >
             {editingTalk?.id === talk.id ? (
               <form onSubmit={handleSaveEdit} className="space-y-4">
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                     Titre
                   </label>
                   <input
@@ -79,13 +77,13 @@ const TalkList = () => {
                     name="title"
                     value={editingTalk.title}
                     onChange={handleEditChange}
+                    className={`w-full px-3 py-2 border rounded-md ${darkMode ? 'bg-gray-600 border-gray-500 text-white' : 'bg-white border-gray-300 text-gray-800'}`}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                     Sujet
                   </label>
                   <input
@@ -93,13 +91,13 @@ const TalkList = () => {
                     name="subject"
                     value={editingTalk.subject}
                     onChange={handleEditChange}
+                    className={`w-full px-3 py-2 border rounded-md ${darkMode ? 'bg-gray-600 border-gray-500 text-white' : 'bg-white border-gray-300 text-gray-800'}`}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                     Durée (minutes)
                   </label>
                   <input
@@ -107,37 +105,36 @@ const TalkList = () => {
                     name="duration"
                     value={editingTalk.duration}
                     onChange={handleEditChange}
+                    className={`w-full px-3 py-2 border rounded-md ${darkMode ? 'bg-gray-600 border-gray-500 text-white' : 'bg-white border-gray-300 text-gray-800'}`}
                     required
-                    min="1"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Présentateur/trice
+                  <label className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                    Présentateur
                   </label>
                   <input
                     type="text"
                     name="presenter"
                     value={editingTalk.presenter}
                     onChange={handleEditChange}
+                    className={`w-full px-3 py-2 border rounded-md ${darkMode ? 'bg-gray-600 border-gray-500 text-white' : 'bg-white border-gray-300 text-gray-800'}`}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                     Objectif
                   </label>
                   <textarea
                     name="objective"
                     value={editingTalk.objective}
                     onChange={handleEditChange}
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    className={`w-full px-3 py-2 border rounded-md ${darkMode ? 'bg-gray-600 border-gray-500 text-white' : 'bg-white border-gray-300 text-gray-800'}`}
                     rows="3"
+                    required
                   />
                 </div>
 
@@ -145,51 +142,58 @@ const TalkList = () => {
                   <button
                     type="button"
                     onClick={() => setEditingTalk(null)}
-                    className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
+                    className={`px-4 py-2 rounded-md ${darkMode ? 'bg-gray-600 hover:bg-gray-500 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-800'}`}
                   >
                     Annuler
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                    className={`px-4 py-2 rounded-md ${darkMode ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-blue-500 hover:bg-blue-600 text-white'}`}
                   >
                     Enregistrer
                   </button>
                 </div>
               </form>
             ) : (
-              <>
+              <div className="space-y-2">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-800 dark:text-white">{talk.title}</h3>
-                    <p className="text-gray-600 dark:text-gray-300">{talk.subject}</p>
-                    <p className="text-gray-600 dark:text-gray-300">Présenté par: {talk.presenter}</p>
-                    <p className="text-gray-600 dark:text-gray-300">Durée: {talk.duration} minutes</p>
-                    <p className="text-gray-600 dark:text-gray-300 mt-2">
-                      <span className="font-semibold">Objectif:</span> {talk.objective}
+                    <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+                      {talk.title}
+                    </h3>
+                    <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      Par {talk.presenter}
                     </p>
                   </div>
                   <div className="flex space-x-2">
                     <button
                       onClick={() => handleEdit(talk)}
-                      className="p-2 text-blue-600 hover:bg-blue-100 rounded-full dark:hover:bg-blue-900"
+                      className={`p-2 rounded-full ${darkMode ? 'hover:bg-gray-600 text-gray-300' : 'hover:bg-gray-200 text-gray-600'}`}
                     >
-                      <PencilIcon className="h-5 w-5" />
+                      <PencilLine className="h-5 w-5" />
                     </button>
                     <button
                       onClick={() => removeTalk(talk.id)}
-                      className="p-2 text-red-600 hover:bg-red-100 rounded-full dark:hover:bg-red-900"
+                      className={`p-2 rounded-full ${darkMode ? 'hover:bg-gray-600 text-gray-300' : 'hover:bg-gray-200 text-gray-600'}`}
                     >
-                      <TrashIcon className="h-5 w-5" />
+                      <Trash2 className="h-5 w-5" />
                     </button>
                   </div>
                 </div>
-                {isPastTalk(talk) && (
-                  <div className="mt-2 text-sm text-red-600 dark:text-red-400">
-                    Ce talk est passé
-                  </div>
-                )}
-              </>
+
+                <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                  <span className="font-medium">Sujet:</span> {talk.subject}
+                </p>
+                <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                  <span className="font-medium">Durée:</span> {talk.duration} minutes
+                </p>
+                <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                  <span className="font-medium">Objectif:</span> {talk.objective}
+                </p>
+                <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                  <span className="font-medium">Date:</span> {new Date(talk.createdAt).toLocaleDateString()}
+                </p>
+              </div>
             )}
           </div>
         ))}
