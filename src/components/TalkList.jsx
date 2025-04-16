@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import useStore from '../store/useStore'
-import { TrashIcon, PencilIcon } from '@heroicons/react/24/outline'
+import './TalkList.css'
 
 const TalkList = () => {
   const [sortBy, setSortBy] = useState('date')
@@ -58,7 +58,7 @@ const TalkList = () => {
         </select>
       </div>
 
-      <div className="grid gap-4">
+      <div className="">
         {sortedTalks.map((talk) => (
           <div
             key={talk.id}
