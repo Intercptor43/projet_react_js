@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import useStore from '../store/useStore'
 import './TalkList.css'
+import { PencilLine, Trash2 } from 'lucide-react'
 
 const TalkList = () => {
   const [sortBy, setSortBy] = useState('date')
@@ -62,11 +63,10 @@ const TalkList = () => {
         {sortedTalks.map((talk) => (
           <div
             key={talk.id}
-            className={`p-4 rounded-lg shadow-md ${
-              isPastTalk(talk)
+            className={`p-4 rounded-lg shadow-md ${isPastTalk(talk)
                 ? 'bg-gray-100 dark:bg-gray-700'
                 : 'bg-white dark:bg-gray-800'
-            }`}
+              }`}
           >
             {editingTalk?.id === talk.id ? (
               <form onSubmit={handleSaveEdit} className="space-y-4">
@@ -174,13 +174,13 @@ const TalkList = () => {
                       onClick={() => handleEdit(talk)}
                       className="p-2 text-blue-600 hover:bg-blue-100 rounded-full dark:hover:bg-blue-900"
                     >
-                      <PencilIcon className="h-5 w-5" />
+                      <PencilLine className="h-5 w-5" />
                     </button>
                     <button
                       onClick={() => removeTalk(talk.id)}
                       className="p-2 text-red-600 hover:bg-red-100 rounded-full dark:hover:bg-red-900"
                     >
-                      <TrashIcon className="h-5 w-5" />
+                      <Trash2 className="h-5 w-5" />
                     </button>
                   </div>
                 </div>

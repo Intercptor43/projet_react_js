@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import useStore from '../store/useStore'
+import './TalkForm.css'
 
 const TalkForm = () => {
   const [formData, setFormData] = useState({
